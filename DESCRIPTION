@@ -1,9 +1,9 @@
 Package: OpenAI4R
-Title: Access OpenAI API from R
-Version: 0.0.1
+Title: Access OpenAI APIs in R
+Version: 0.0.1.1
 Authors@R: 
     person("Yiming", "Sun", , "yiming.sun12138@gmail.com", role = c("aut", "cre"))
-Description: ChatGPT is the most popular chatting AI in 2023 (maybe also in the future), built by OpenAI. Here, OpenAI4R package is built for accessing ChatGPT API from R, as well as other APIs provided by OpenAI.
+Description: OpenAI4R enables a clear and intuitive calling of OpenAI's powerful AI models in R language.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

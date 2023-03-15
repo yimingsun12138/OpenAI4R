@@ -3,7 +3,7 @@
 \docType{data}
 \name{URL_completion}
 \alias{URL_completion}
-\title{OpenAI completion API URL.}
+\title{OpenAI completion API URL}
 \format{
 An object of class \code{character} of length 1.
 }

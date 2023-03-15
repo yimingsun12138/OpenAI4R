@@ -1,4 +1,8 @@
-#' Generate chat_session id.
+#' Generate chat_session id
+#' 
+#' @description Generate chat_session id.
+#' 
+#' @return Chat session id in character form.
 generate_session_id <- function(){
   
   #generate session id
@@ -15,7 +19,12 @@ generate_session_id <- function(){
   return(session_id)
 }
 
-#' Initialize a chat session for ChatGPT.
+#' Initialize a chat session for ChatGPT
+#' 
+#' @description OpenAI4R is designed to implement chat sessions in the form of functions, so that users can achieve continuous conversations by simply entering text into the function.
+#' In order to provide multiple chat sessions in one environment, users need to initialize each chat session through this function.
+#' It should be noted that OpenAI limits the length of dialogues, and when this limit is exceeded, the conversation will start deleting from the beginning one by one to meet the length limit.
+#' Use `?chat_func_char` to get more information about chat sessions in function form.
 #' 
 #' @param global Global system setting for chat session.
 #' @param model OpenAI model used for chatting.
@@ -28,6 +37,7 @@ generate_session_id <- function(){
 #' @param frequency_penalty Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
 #' 
 #' @return A function as a chat session.
+#' 
 #' @export
 Init_chat_session <- function(global = NULL,
                               model = 'gpt-3.5-turbo-0301',
@@ -62,7 +72,7 @@ Init_chat_session <- function(global = NULL,
   temp <- chat_func_char
   temp <- base::sprintf(temp,
                         model,temperature,top_p,n,max_tokens,presence_penalty,frequency_penalty,
-                        session_id,session_id,session_id)
+                        session_id,session_id,session_id,session_id)
   
   base::eval(expr = base::parse(text = temp))
   

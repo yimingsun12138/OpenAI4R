@@ -3,7 +3,7 @@
 \docType{data}
 \name{URL_chat}
 \alias{URL_chat}
-\title{OpenAI chat API URL.}
+\title{OpenAI chat API URL}
 \format{
 An object of class \code{character} of length 1.
 }
