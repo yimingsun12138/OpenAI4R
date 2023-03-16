@@ -6,13 +6,14 @@
 #' Therefore, it is necessary to dynamically initialize the chat session when there are multiple chat sessions in the current environment.
 #' 
 #' @details Below is an introduction to the roles and functions of different parameters in the function-based chat session.
-#' `prompt_content` The conversation content that you input.
-#' `role` The identity used when issuing the instructions, can only be selected as 'user' or 'system'.
-#' `model` The AI model provided by OpenAI.
-#' `temperature`,`top_p`,`n`,`max_tokens`,`presence_penalty`,`frequency_penalty` Refer to the parameter description from OpenAI.
-#' `simplify` Whether to output the conversation directly or return the complete HTTP request content.
-#' `export_history` Whether export the chat history as text.
-#' `export_chat_session` Whether export the chat history as chat_session object.
+#' @details `prompt_content` The conversation content that you input.
+#' @details `role` The identity used when issuing the instructions, can only be selected as 'user' or 'system'.
+#' @details `model` The AI model provided by OpenAI.
+#' @details `temperature`,`top_p`,`n`,`max_tokens`,`presence_penalty`,`frequency_penalty` Refer to the parameter description from OpenAI.
+#' @details `stop_char` Up to 4 sequences where the API will stop generating further tokens. Input as a vector.
+#' @details `simplify` Whether to output the conversation directly or return the complete HTTP request content.
+#' @details `export_history` Whether export the chat history as text.
+#' @details `export_chat_session` Whether export the chat history as chat_session object.
 #' 
 #' @export
 chat_func_char <- "chat_func <- function(prompt_content,
@@ -24,12 +25,27 @@ chat_func_char <- "chat_func <- function(prompt_content,
                       max_tokens = %d,
                       presence_penalty = %f,
                       frequency_penalty = %f,
+                      stop_char = NULL,
                       simplify = TRUE,
                       export_history = FALSE,
                       export_chat_session = FALSE){
+  
   #check role
   if(!(role %%in%% c('system','user'))){
     stop('prompt role can only be system or user!')
+  }
+  
+  #check prompt
+  if(!(base::class(prompt_content) == 'character')){
+    stop('prompt_content parameter can only be a string!')
+  }
+  if(base::length(prompt_content) > 1){
+    stop('only one prompt is allowed!')
+  }
+  
+  #check stop_char
+  if(!(base::is.null(stop_char) | base::class(stop_char) == 'character')){
+    stop('stop_char parameter can only be NULL or strings!')
   }
   
   #whether export chat_session object
@@ -66,6 +82,12 @@ chat_func_char <- "chat_func <- function(prompt_content,
                             `frequency_penalty` = frequency_penalty,
                             `messages` = chat_history)
     
+    #add stop
+    if(!(base::is.null(stop_char))){
+      http_body <- base::append(http_body,
+                                base::list(`stop` = stop_char))
+    }
+    
     #request
     if(base::exists(x = 'OpenAI_organization')){
       request_POST <- httr::POST(
@@ -88,6 +110,11 @@ chat_func_char <- "chat_func <- function(prompt_content,
     
     requset_content <- httr::content(x = request_POST)
     
+    #check request error
+    if(base::is.null(requset_content$choices) & base::is.null(requset_content$error$code)){
+      stop(requset_content$error$message)
+    }
+    
     #length exceeded?
     if(!(base::is.null(requset_content$choices))){
       indi <- FALSE
@@ -96,7 +123,7 @@ chat_func_char <- "chat_func <- function(prompt_content,
       indi <- TRUE
       forcement <- TRUE
     }else{
-      stop('requset_content wrong!')
+      stop(requset_content$error$message)
     }
   }
   
@@ -116,7 +143,7 @@ chat_func_char <- "chat_func <- function(prompt_content,
       base::cat(base::paste0('ChatGPT:\\n',base::gsub(pattern = '^\\n\\n',replacement = '',x = requset_content$choices[[i]]$message$content,fixed = FALSE),'\\n\\n'))
     }
   }else{
-    base::message('Full http request content will be returned!')
+    base::message('full http request content will be returned!')
     return(requset_content)
   }
   

@@ -36,6 +36,8 @@ generate_session_id <- function(){
 #' @param presence_penalty Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
 #' @param frequency_penalty Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
 #' 
+#' @details `stream`, `logit_bias` and `user` parameter are not supported currently.
+#' 
 #' @return A function as a chat session.
 #' 
 #' @export
@@ -49,13 +51,20 @@ Init_chat_session <- function(global = NULL,
                               presence_penalty = 0,
                               frequency_penalty = 0){
   
-  #check parameter
+  #check global
   if(!(base::is.null(global) | base::class(global) == 'character')){
     stop('global parameter must be NULL or a string!')
   }
+  if(base::length(global) > 1){
+    stop('only one prompt is allowed!')
+  }
+  
+  #check model
   if(!(model %in% OpenAI_model_list(simplify = TRUE))){
     stop('model is not supported by OpenAI!')
   }
+  
+  #check import_history
   if(!(base::is.null(import_histroy) | base::class(import_histroy) == 'chat_session')){
     stop('import_histroy must be a chat_session object if you would like to import!')
   }

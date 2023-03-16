@@ -44,3 +44,6 @@ In order to provide multiple chat sessions in one environment, users need to ini
 It should be noted that OpenAI limits the length of dialogues, and when this limit is exceeded, the conversation will start deleting from the beginning one by one to meet the length limit.
 Use \code{?chat_func_char} to get more information about chat sessions in function form.
 }
+\details{
+\code{stream}, \code{logit_bias} and \code{user} parameter are not supported currently.
+}

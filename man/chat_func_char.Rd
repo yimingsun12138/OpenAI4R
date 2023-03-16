@@ -18,12 +18,21 @@ Therefore, it is necessary to dynamically initialize the chat session when there
 }
 \details{
 Below is an introduction to the roles and functions of different parameters in the function-based chat session.
+
 \code{prompt_content} The conversation content that you input.
+
 \code{role} The identity used when issuing the instructions, can only be selected as 'user' or 'system'.
+
 \code{model} The AI model provided by OpenAI.
+
 \code{temperature},\code{top_p},\code{n},\code{max_tokens},\code{presence_penalty},\code{frequency_penalty} Refer to the parameter description from OpenAI.
+
+\code{stop_char} Up to 4 sequences where the API will stop generating further tokens. Input as a vector.
+
 \code{simplify} Whether to output the conversation directly or return the complete HTTP request content.
+
 \code{export_history} Whether export the chat history as text.
+
 \code{export_chat_session} Whether export the chat history as chat_session object.
 }
 \keyword{datasets}

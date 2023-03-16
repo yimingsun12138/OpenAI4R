@@ -2,7 +2,7 @@
 
 OpenAI is an artificial intelligence research laboratory founded by a group of technology leaders in 2015, with the aim of advancing digital intelligence technology for the benefit of humanity as a whole. OpenAI conducts research in various areas of artificial intelligence, including natural language processing, robotics, and reinforcement learning. It has developed several powerful AI models, such as GPT (Generative Pre-trained Transformer) and DALL-E, which can generate human-like language and images from textual descriptions.
 
-The development of the OpenAI4R R package, is aimed to enable a clear and intuitive calling of OpenAI's powerful AI models within the R language.
+As a **community-maintained** R package, OpenAI4R is aimed to enable a clear and intuitive calling of OpenAI's powerful AI models within the R language.
 
 ## Install
 
@@ -20,7 +20,7 @@ devtools::install_github('yimingsun12138/OpenAI4R',ref = 'dev')
 
 ## Notice
 
-OpenAI4R now provides ChatGPT API only. More APIs will be added later.
+OpenAI4R now provides ChatGPT and completions API only. More APIs will be added later.
 
 ## Usage
 
@@ -65,6 +65,54 @@ I'm glad you enjoyed the game! Feel free to play again or try out some other gam
 
 You can also modify the model parameters during the conversation and export the conversation history. Refer to `?chat_func_char` for more details.
 
+### Completion model
+
+The completion model (endpoint) can be used for a wide variety of tasks. It provides a simple but powerful interface to some of OpenAI models. You input some text as a prompt, and the model will generate a text completion that attempts to match whatever context or pattern you gave it. Some examples are provided below.
+
+```{R}
+> completion('Write a tagline for an ice cream shop.\n')
+completion model:
+Write a tagline for an ice cream shop.
+
+"Cool down with a scoop of happiness!"
+```
+
+If you do not want to echo your prompt:
+
+```{R}
+> completion('Write a tagline for an ice cream shop.',echo = FALSE)
+completion model:
+"Cool down with a scoop of fun!"
+```
+
+Create a text classifier:
+
+```{R}
+> completion("Decide whether a Tweet's sentiment is positive, neutral, or negative.
++ 
++ Tweet: I loved the new Batman movie!
++ Sentiment:")
+completion model:
+Decide whether a Tweet's sentiment is positive, neutral, or negative.
+
+Tweet: I loved the new Batman movie!
+Sentiment: Positive
+```
+
+You can even insert the completion into your content, with the `suffix` parameter:
+
+```{R}
+> completion(prompt_content = "I went to college at Boston University. After getting my degree, I decided to make a change",suffix = "Now, I can’t get enough of the Pacific Ocean!")
+completion model:
+I went to college at Boston University. After getting my degree, I decided to make a change and moved to California. I was looking for something new and exciting. The change of scenery and the warm weather was perfect. Now, I can’t get enough of the Pacific Ocean!
+```
+
+That is so cool!
+
+## Limitation
+
+-   `stream`, `logit_bias` and `user` parameter are not supported in Chat model and completion model currently.
+
 ## Future Plan
 
 -   Add more OpenAI APIs in this package.
@@ -72,3 +120,5 @@ You can also modify the model parameters during the conversation and export the 
 -   More detailed document and guidance.
 
 -   Use a universal function to initialize all APIs, when more APIs are added in the future.
+
+-   Fix the limitation.
