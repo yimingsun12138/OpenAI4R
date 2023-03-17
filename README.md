@@ -111,9 +111,9 @@ That is so cool!
 
 ## Limitation
 
--   `stream`, `logit_bias` and `user` parameter are not supported in Chat model and completion model currently.
+-   `stream`, `logit_bias` and `user` parameter are not supported in Chat model and Completion model currently.
 
-## Future Plan
+## To do list
 
 -   Add more OpenAI APIs in this package.
 

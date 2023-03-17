@@ -1,6 +1,6 @@
 Package: OpenAI4R
 Title: Access OpenAI APIs in R
-Version: 0.0.1.2
+Version: 0.0.2
 Authors@R: 
     person("Yiming", "Sun", , "yiming.sun12138@gmail.com", role = c("aut", "cre"))
 Description: OpenAI4R enables a clear and intuitive calling of OpenAI's powerful AI models in R language.

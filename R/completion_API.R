@@ -60,7 +60,12 @@ completion <- function(prompt_content,
   
   #check best_of
   if(best_of < n){
-    stop('best_of must be greater than n!')
+    if(best_of == 1){
+      warning('best_of must be greater than n, set to n by default!')
+      best_of <- n
+    }else{
+      stop('best_of must be greater than n!')
+    }
   }
   
   #check logprobs
